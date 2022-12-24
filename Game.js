@@ -1,3 +1,57 @@
+let hero, mapps, lvl;
+let screen = 0;
+
+function setup(){
+    hero = new Hero(200,300,30,30);
+    mapps = new Map(600, 600);
+    lvl = new Level(1, 0, 50);
+    lvl.setLevel(1);
+    mapps.init();
+}
+
+function draw(){
+    if(screen == 0){
+        background(220);
+        fill(255);
+    }
+    else if(screen == 1){
+        background(220);
+        fill('#000');
+        text(`Level: ${lvl.currentLevel}`, 50, 20);
+        text(`Life: ${hero.life}`, 50, 40);
+        text(`Score: ${hero.getScore()}`, 50, 60);
+        hero.show();
+        hero.move();
+
+        for(let blt of hero.bullet){
+            blt.show();
+        }
+
+        for(let mon of mapps.monsters){
+            mon.show();
+
+            if(dist(mon.x, mon.y, hero.x, hero.y) < 20){ // Mengecek apakah Posisi Hero dan Monster < dari 20
+                mapps.monsters.splice(mapps.monsters.indexOf(mon), 1); // Menghapus Monster
+            
+                if(mon.color === 1){ // jika warna = 1
+                    hero.increaseScore(); // Menambah Score
+
+                    if(hero.getScore() % 5 == 0){
+                        lvl.increaseLevel();
+                    }
+                }
+                else{
+                    hero.calculateLife(1);
+                }
+            }
+        }
+
+        if(hero.life <= 0){
+            screen = 2
+        }
+    }
+}
+
 class Entity{
     constructor(x, y, width, height){
         this.x = x;
