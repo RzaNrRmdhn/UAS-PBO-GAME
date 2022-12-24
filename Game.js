@@ -12,7 +12,10 @@ function setup(){
 function draw(){
     if(screen == 0){
         background(220);
-        fill(255);
+        fill(0);
+        text('Click To Start!', 300, 270);
+        text('Reza Nur Ramadhan-2117051057- Kelas D', 300, 300);
+        text('Muhammad Zidan Pasya-2117051070- Kelas C', 300, 330);
     }
     else if(screen == 1){
         background(220);
