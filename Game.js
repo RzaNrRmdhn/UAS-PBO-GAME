@@ -71,3 +71,102 @@ class Bullet{
         this.y -= 5;
     }
 }
+
+class Level{
+    constructor(currentLevel, latestLevel, maxLevel){
+        this.currentLevel = currentLevel;
+        this.latestLevel = latestLevel;
+        this.maxLevel = maxLevel;
+    }
+
+    setLevel(level){
+        this.currentLevel = level;
+    }
+
+    getCurrentLevel(){
+        return this.maxLevel;
+    }
+
+    increaseLevel(){
+        this.currentLevel++;
+    }
+}
+
+class Hero extends Entity{
+    constructor(x, y, width, height){
+        super(x, y, width, height);
+        this.life = 3;
+        this.score = 0;
+    }
+
+    show(){
+        fill('#F0A')
+        ellipse(this.x, this.y, this.width, this.height);
+        noFill();
+    }
+
+    move(){
+        if (keyIsDown(87)) { // 87 == W
+            hero.moveUp();
+        }
+        if (keyIsDown(83)) { // 83 == s
+            hero.moveDown();
+        }
+        if (keyIsDown(65)) { // 65 == A
+            hero.moveLeft();
+        }
+        if (keyIsDown(68)) { // 68 == D
+            hero.moveRight();
+        }
+    }
+
+    increaseScore(){
+        this.score++;
+    }
+
+    getScore(){
+        return this.score;
+    }
+
+    calculateLife(health){
+        this.life -= health;
+    }
+
+    saveScore(){
+
+    }
+}
+
+class Monster extends Entity{
+    constructor(x, y, width, height){
+        super(x, y, width, height);
+        this.life = 0;
+        this.color = 0;
+        this.effect = 0;
+        this.type = random(0,2);
+    }
+
+    show(){ // Memunculkan Monster dengan bentuk lingkaran dan 2 tipe warna berbeda
+        stroke(0);
+        if(this.type > 1){
+          fill('#ff0000'); // Kode Warna Merah
+          rect(this.x, this.y, this.width, this.height);
+          noFill()
+         
+        }else{
+            this.color = 1;
+            fill(random(0,255), random(0,255), random(0,255));
+            rect(this.x, this.y, this.width, this.height);
+            noFill()
+        }
+      }
+
+    moveRandom(){
+
+    }
+
+    saveScore(){
+
+    }
+
+}
