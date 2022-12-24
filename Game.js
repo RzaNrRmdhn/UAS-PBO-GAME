@@ -49,6 +49,56 @@ function draw(){
         if(hero.life <= 0){
             screen = 2
         }
+        for(var mon of mapps.monsters){ // Looping Monster
+            for(var blt of hero.bullet){
+                if(dist(mon.x, mon.y, blt.x, blt.y) < 10){
+                    mapps.monsters.splice(mapps.monsters.indexOf(mon), 1);
+                    if(hero.score % 10 == 0){
+                        lvl.latestLevel = lvl.getCurrentLevel();
+                        lvl.setLevel(lvl.getCurrentLevel() + 1);
+                    }
+                    hero.bullet.splice(hero.bullet.indexOf(blt), 1);
+                }
+            }
+            if(mon.x < 0){ // Jika posisi X monsters 0
+                mapps.monsters.splice(mapps.monsters.indexOf(mon), 1); 
+                var posY = random();
+                var posX = random(0, this.height);
+                mon = new Monster(posX, posY, 10, 10);
+                mapps.monsters.push(mon)
+            }
+        }
+        if(mapps.monsters.length < 1){
+            mapps.init()
+        }
+    }
+    else{
+        background(0);
+        textAlign(CENTER);
+        fill(255)
+        text('GAME OVER', width / 2, height / 2);
+        fill(255)
+        text(`Score: ${hero.getScore()}`, width / 2, height / 2 + 20);
+        text(`Level: ${lvl.getCurrentLevel()}`, width / 2, height / 2 + 40);
+    }
+}
+
+function keyPressed(){
+    if(keyCode === 32){
+        hero.attack();
+    }
+}
+
+function mousePressed(){
+    if(screen == 0){
+        screen = 1;
+    }
+    else if(screen == 2){
+        screen = 0;
+        hero.x = 200;
+        hero.y = 300;
+        hero.score = 0
+        hero.life = 3;
     }
 }
 
