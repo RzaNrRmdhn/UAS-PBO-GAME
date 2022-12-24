@@ -191,7 +191,7 @@ class Level{
     }
 
     getCurrentLevel(){
-        return this.maxLevel;
+        return this.currentLevel;
     }
 
     increaseLevel(){
